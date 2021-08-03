@@ -1,22 +1,52 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { useHistory } from "react-router-dom";
 import SearchForm from './SearchForm';
-import * as ReactBootStrap from 'react-bootstrap';
+// import * as ReactBootStrap from 'react-bootstrap';
 import ListShow from './ListShow';
+import { Text, SimpleGrid, Box, HStack, Heading } from "@chakra-ui/react";
 
 
-const ViewProject = ({projects, deleteProject, editRow}) => {
+
+const ViewProject = ({projects, setProjects, deleteProject, editRow}) => {
+
+  console.log(projects)
+  
 
   const history = useHistory();
+  const [search, setSearch] = useState([]);
+  const [searchError, SetSearchError ] = useState(false);
+
+  
 
     const handleClickAdd = () => {
       history.push('/add')
     }
+
+    const handleSearch = (project_name) => {
+      const serach_project = projects.find(el => el.proj === project_name)
+      if (serach_project) {
+        setSearch([serach_project])
+      }
+      
+      SetSearchError(true)
+      setSearch([]);
+      
+    }
+
+  
     
     return (
       <div className="container">
         
-          <h1 className="text-center mt-5 mb-5"> My Projects </h1>
+          
+          <Heading 
+            orientation="horizontal" 
+            marginTop="8" 
+            textAlign="center" 
+            marginBottom="5"
+          > 
+            My Projects 
+          </Heading>
 
           <div className="container d-flex justify-content-end">
             <button
@@ -27,34 +57,71 @@ const ViewProject = ({projects, deleteProject, editRow}) => {
             </button>
           </div>
 
-        <SearchForm />
+        <SearchForm 
+          projects={projects}
+          handleSearch={handleSearch} 
+        />
 
-        <div className="table-responsive">
 
-          <ReactBootStrap.Table className="">
-              <thead className="thead-dark">
-                  <tr>
-                      <th>Project name</th>
-                      <th>Description</th>
-                      <th>Project manager</th>
-                      <th>Assigned to</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                  </tr>
-              </thead>
-              
+        
+
+        {/* Encabezado */}
+        <Box w="100%" m="auto" bg="rgba(0, 0, 0, 0.02)" boxShadow="lg" borderRadius="4px">
+
+              <SimpleGrid px={4} columns={6}  spacingY="10px" spacingX="10px" border="1px" borderColor="gray.200" bg="bgGray.100" display={{base: "none", md: "grid"}} borderRadius="4px" textDecoration="bold">
+                  
+                  <HStack height="60px">
+                        <Text fontSize="14px">
+                            Project Info
+                        </Text>    
+                  </HStack>
+
+                  <HStack height="60px">
+                        <Text fontSize="14px">
+                            Description
+                        </Text>    
+                  </HStack>
+
+                  <HStack height="60px">
+                      <Text fontSize="14px">
+                          Project Manager
+                      </Text>    
+                  </HStack>
+
+                  <HStack height="60px">
+                      <Text fontSize="14px">
+                          Assigned to
+                      </Text>    
+                  </HStack>
+
+                  <HStack height="60px">
+                      <Text fontSize="14px">
+                          Status
+                      </Text>    
+                  </HStack>
+
+                  <HStack height="60px">
+                      <Text fontSize="14px">
+                          Actions
+                      </Text>    
+                  </HStack>
+
+                </SimpleGrid>
+             
                 
-                  {projects.lenght !==0 ? (
-                  projects.map((el) => <ListShow key={el.id} {...el} 
+                  {
+                    projects.length > 0  ? (
+                      
+                    projects.map((el) => <ListShow key={el.id} {...el} 
                     deleteProject={deleteProject} 
                     editRow={editRow} 
                     />)
                   ) : (
-                    <h3>Add New Projects</h3>
+                    <Heading textAlign="center" marginTop={4} marginBottom={4}>Empty Projects</Heading>
                   )
-                  }
-          </ReactBootStrap.Table>
-        </div>
+                    }
+          </Box>
+        
       </div>
          
     )

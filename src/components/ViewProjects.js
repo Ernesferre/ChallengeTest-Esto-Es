@@ -34,7 +34,7 @@ const ViewProjects = (props) => {
           </button>
         </div>
 
-        <SearchForm />
+        
 
         <div className="table-responsive">
           <ReactBootStrap.Table className="">

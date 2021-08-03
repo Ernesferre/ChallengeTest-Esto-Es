@@ -3,11 +3,14 @@ import './App.css';
 import {useState} from 'react';
 import ViewProject from './components/ViewProject';
 import { v4 as uuidv4 } from 'uuid'
+import moment from "moment";
 import {BrowserRouter,Switch,Route} from "react-router-dom";
 import CreateProjectForm from './components/CreateProjectForm';
 import EditProjectForm from './components/EditProjectForm';
 import Swal from 'sweetalert2'
 import Header from './components/Header';
+import SearchForm from './components/SearchForm';
+import { ChakraProvider } from "@chakra-ui/react";
 
 
 
@@ -17,6 +20,7 @@ function App() {
     {
       id: uuidv4(),
       proj: "Nike",
+      date: "29 07 2021 2:31 PM",
       description: "Create login",
       manager: "Pedro Alvarez",
       assigned: "Luis Gomez",
@@ -25,6 +29,7 @@ function App() {
     {
       id: uuidv4(),
       proj: "Adidas",
+      date: "30 07 2021 10:37 AM",
       description: "Header modification",
       manager: "Raul Perez",
       assigned: "Juan Garcia",
@@ -40,6 +45,7 @@ function App() {
     
     
     project.id = uuidv4()
+    project.date = moment().format("DD MM YYYY LT");
     setProjects ([
       ...projects,
       project
@@ -80,6 +86,7 @@ function App() {
   const [currentProject, setCurrentProject] = useState({
         id: null, 
         proj:'', 
+        date: '',
         description: '',
         manager: '', 
         assigned:'', 
@@ -92,6 +99,7 @@ function App() {
     setCurrentProject({
         id: project.id, 
         proj: project.proj, 
+        date: project.date,
         description: project.description,
         manager: project.manager, 
         assigned: project.assigned, 
@@ -101,46 +109,58 @@ function App() {
   }
 
   const updateProject = (id, updatedProject) => {
+    
+    console.log(id)
+    console.log(updatedProject)
+    
     setEditing(false)
-  
     setProjects(projects.map((el) => (el.id === id ? updatedProject : el)))
   }
 
   
   return (
-    <div className="container">
+    <ChakraProvider>
+        <div className="container">
 
-    <Header />
-    <BrowserRouter>
-    <Switch>
-      <Route exact path="/">
-          <ViewProject 
-            projects={projects} 
-            deleteProject={deleteProject} 
-            editRow={editRow}
-          />
-      </Route>
+        <Header />
+        <BrowserRouter>
 
-      
-      
-      <Route exact path="/edit/:projectName">
-                 <EditProjectForm
-                    setEditing={setEditing}
-                    currentProject={currentProject}
-                    updateProject={updateProject}
-                  />
-      </Route>
+        
+
+        <Switch>
+
+          
+
+          <Route exact path="/">
+              <ViewProject 
+                projects={projects} 
+                setProjects={setProjects}
+                deleteProject={deleteProject} 
+                editRow={editRow}
+              />
+          </Route>
+
+          
+          
+          <Route exact path="/edit/:projectName">
+                    <EditProjectForm
+                        setEditing={setEditing}
+                        currentProject={currentProject}
+                        updateProject={updateProject}
+                      />
+          </Route>
+                    
+          <Route exact path="/add">
+                      <CreateProjectForm 
+                        addProject={addProject}/>
+          </Route>
+                  
                 
-      <Route exact path="/add">
-                  <CreateProjectForm 
-                    addProject={addProject}/>
-      </Route>
-              
-            
-    </Switch>
-    </BrowserRouter>
-      
-    </div>
+        </Switch>
+        </BrowserRouter>
+          
+        </div>
+    </ChakraProvider>
   );
 }
 

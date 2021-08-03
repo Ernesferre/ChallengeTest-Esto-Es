@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa'
 import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
+import { Heading, Box, HStack, Button } from "@chakra-ui/react";
+
 
 
 const CreateProjectForm = ({addProject}) => {
@@ -82,13 +84,26 @@ const CreateProjectForm = ({addProject}) => {
     return (
         <div>
             
-            <div className="d-inline-block mb-3">
+            
+                <Box>
+                    <HStack marginTop={3} >
+                        <Button>
+                            <span className="" onClick={handleBack} cursor="pointer"> <FaArrowLeft /> </span>
+                            <h6 className="" onClick={handleBack}>Back </h6>
+                        </Button>
+                    </HStack>
                 
-                    <span className="d-md-inline-block ml-2 d-flex flex-sm-row" onClick={handleBack} cursor="pointer"> <FaArrowLeft /> </span>
-                    <h6 className="d-md-inline-block p-2" onClick={handleBack}>Back </h6>
                 
-                <h3 className="d-md-inline-block mb-3 mt-5 m-5 p-2" > Add Project </h3>
-            </div>
+                    <Heading 
+                        orientation="horizontal" 
+                        marginTop="6" 
+                        textAlign="center" 
+                        marginBottom="3"
+                    > 
+                        Add Project 
+                    </Heading>
+                </Box>
+            
             
             
             {error ? <p className="text-danger ">Every field is required !!!</p> 

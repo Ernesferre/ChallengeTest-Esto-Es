@@ -3,9 +3,22 @@ import { useState} from 'react';
 import { useHistory, useParams } from "react-router-dom";
 import { FaArrowLeft } from 'react-icons/fa'
 import Swal from 'sweetalert2'
+import { Heading, Box, HStack, Button } from "@chakra-ui/react";
 
 
 const EditProjectForm = (props) => {
+
+    const [proyecto, setProyecto] = useState(props.currentProject);
+
+    const actualizarState = (event) => {
+        const {name, value } = event.target
+
+        setProyecto({...proyecto, [name]: value})
+    }
+
+    console.log(props.currentProject)
+    console.log(props.updateProject)
+
 
     const history = useHistory();
 
@@ -21,47 +34,59 @@ const EditProjectForm = (props) => {
             timer: 2500
         })
         history.push('/');
+
     }
 
     const handleBack = () => {
         history.push('/')
     }
-
-
-    console.log(props.currentProject)
-
-    const [proyecto, setProyecto] = useState(props.currentProject);
-
     
-    const actualizarState = e => {
-        setProyecto({
-            ...proyecto,
-            [e.target.name]: e.target.value
-        })
-    }
-
     
     const {proj, manager, description, assigned, status} = proyecto;
 
 
+    const SubmitEdit = e => {
+        e.preventDefault();
+        props.updateProject(proyecto.id, proyecto)
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Changes Saved',
+            showConfirmButton: false,
+            timer: 2500
+        })
+        
+        history.push('/');
+    }
+
     return (
         <div>
             
-            <div className="d-inline-block mb-4">
-                <span className="d-md-inline-block ml-2" onClick={handleBack} cursor="pointer"> <FaArrowLeft /> </span>
-                <h6 className="d-md-inline-block" onClick={handleBack}>Back </h6>
-                <h3 className="d-md-inline-block mb-3 mt-5 m-5" > Edit Project </h3>
-            </div>
+            <Box>
+                    <HStack marginTop={3} >
+                        <Button>
+                            <span className="" onClick={handleBack} cursor="pointer"> <FaArrowLeft /> </span>
+                            <h6 className="" onClick={handleBack}>Back </h6>
+                        </Button>
+                    </HStack>
+                
+                
+                    <Heading 
+                        orientation="horizontal" 
+                        marginTop="6" 
+                        textAlign="center" 
+                        marginBottom="3"
+                    > 
+                        Edit Project 
+                    </Heading>
+            </Box>
             
             
             
             
             <form 
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    props.updateProject(proyecto.id, proyecto)
-
-                }}>
+                onSubmit={SubmitEdit}
+            >
                 <div className="form-group">
                     <label>Project name</label>
                     <input 
@@ -139,7 +164,8 @@ const EditProjectForm = (props) => {
 
                     <button 
                         className="btn btn-danger mt-3"
-                        onClick={handleClick}
+                        // onClick={handleClick}
+                        type="submit"
                     >
                         Save changes
                     </button>
