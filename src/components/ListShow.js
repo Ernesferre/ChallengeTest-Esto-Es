@@ -18,9 +18,25 @@ const ListShow = (props) => {
 
         
         {/* Mobile */}
-        <Box bg="#fff" w="100%" h="auto" d={{base: "flex", md: "none"}} direction="row" justifyContent="space-between" px="16px" py="8px" border="1px" borderColor="gray.200">
 
-            <Stack d="flex" direction={{base: "column", md: "row"}} justifyContent={{base: "center", md: "space-around"}}>
+        <Box 
+            bg="#fff" 
+            w="100%" 
+            h="auto" 
+            d={{base: "flex", md: "none"}} 
+            direction="row" 
+            justifyContent="space-between" 
+            px="16px" 
+            py="8px" 
+            border="1px" 
+            borderColor="gray.200"
+        >
+
+            <Stack 
+                d="flex" 
+                direction={{base: "column", md: "row"}} 
+                justifyContent={{base: "center", md: "space-around"}}
+            >
 
                 <Heading fontFamily="title" fontSize={{base: "14px"}}  >
                     {proj}
@@ -30,9 +46,12 @@ const ListShow = (props) => {
                     Creation date: {date}
                 </Text>
 
-                <Stack d="flex" direction="row">
+                <Stack 
+                    d="flex" 
+                    direction="row">
 
                     <Avatar src="https://bit.ly/kent-c-dodds" w="25px" h="25px" />
+
                     <Text fontSize={{base: "12px"}}>{assigned}</Text>
 
                 </Stack>
@@ -59,7 +78,16 @@ const ListShow = (props) => {
 
 
         {/* Desktop */}
-        <SimpleGrid  bg="#fff" border="1px" borderColor="gray.100" columns={6} spacingY="10px" spacingX="10px" p={4} d={{base: "none", md: "grid"}}>
+        <SimpleGrid  
+            bg="#fff" 
+            border="1px" 
+            borderColor="gray.100" 
+            columns={6} 
+            spacingY="10px" 
+            spacingX="10px" 
+            p={4} 
+            d={{base: "none", md: "grid"}}
+        >
             <HStack height="60px">
                 <Box>
                     <Text fontSize="14px">{proj}</Text>

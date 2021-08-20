@@ -1,12 +1,18 @@
 import React from 'react'
-import { Nav } from 'react-bootstrap'
+import { Nav, MDBRow } from 'react-bootstrap'
 import  logo   from '../assets/logo.png';
 
 const Header = () => {
     return (
-        <div className="navbar-nav mr-auto p-2">  
-            <Nav>
-                <img src={logo} alt="EstoEs"></img>           
+        <div className="navbar-nav mr-auto ">  
+            <Nav
+                
+            >
+                <p 
+                    
+                >
+                    Mi Logo
+                </p>           
             </Nav>
             <hr></hr>
         </div>

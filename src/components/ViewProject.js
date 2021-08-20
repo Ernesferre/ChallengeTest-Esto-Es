@@ -22,15 +22,19 @@ const ViewProject = ({projects, setProjects, deleteProject, editRow}) => {
       history.push('/add')
     }
 
+
+
+    
     const handleSearch = (project_name) => {
-      const serach_project = projects.find(el => el.proj === project_name)
+      const serach_project = projects.find(el => el.proj.toLowerCase() === project_name)
+      console.log(serach_project)
       if (serach_project) {
         setSearch([serach_project])
-      }
-      
+        console.log(search)
+      } else {
       SetSearchError(true)
       setSearch([]);
-      
+      }
     }
 
   
@@ -58,7 +62,7 @@ const ViewProject = ({projects, setProjects, deleteProject, editRow}) => {
           </div>
 
         <SearchForm 
-          projects={projects}
+          projects={(search) ? search : projects}
           handleSearch={handleSearch} 
         />
 
@@ -110,15 +114,20 @@ const ViewProject = ({projects, setProjects, deleteProject, editRow}) => {
              
                 
                   {
-                    projects.length > 0  ? (
+                    search.length > 0  ? (
                       
+                      search.map((el) => <ListShow key={el.id} {...el} 
+                      deleteProject={deleteProject} 
+                      editRow={editRow} 
+                    />)
+                  ) : (
+
                     projects.map((el) => <ListShow key={el.id} {...el} 
                     deleteProject={deleteProject} 
                     editRow={editRow} 
-                    />)
-                  ) : (
-                    <Heading textAlign="center" marginTop={4} marginBottom={4}>Empty Projects</Heading>
-                  )
+                    />
+                    // <Heading textAlign="center" marginTop={4} marginBottom={4}>Empty Projects</Heading>
+                  ))
                     }
           </Box>
         

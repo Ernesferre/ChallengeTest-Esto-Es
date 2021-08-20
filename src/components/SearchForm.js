@@ -1,5 +1,5 @@
 import { Box, HStack } from '@chakra-ui/react';
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { FaSearch } from 'react-icons/fa'
 
 
@@ -12,13 +12,19 @@ const SearchForm = ({projects, handleSearch}) => {
   
 
 
-
+  const handleBusqueda = (e) => {
+    setBusqueda(
+        e.target.value  
+    )
+}
 
   
-  const SubmitName = e => {
-    e.preventDefault();
-    handleSearch(busqueda);
-  }
+  
+  useEffect(() => {
+    handleSearch(busqueda.toLowerCase().trim());
+  }, [busqueda])
+  
+
 
   console.log(busqueda)
 
@@ -28,7 +34,7 @@ const SearchForm = ({projects, handleSearch}) => {
           <HStack>
           <form 
             className="input-group mb-5 mt-4 container"
-            onSubmit={SubmitName}
+            // onSubmit={SubmitName}
           >
             <input 
               type="text" 
@@ -36,17 +42,17 @@ const SearchForm = ({projects, handleSearch}) => {
               placeholder="Search project" 
               aria-label="" 
               aria-describedby="basic-addon1" 
-              onChange={e => setBusqueda(e.target.value)}
+              onChange={handleBusqueda}
               
               
             />
             {/* <div className="input-group-append"> */}
-              <button 
+              {/* <button 
                 className="btn btn-secondary" type="button"
                 type="submit"
               >
               <FaSearch /> 
-              </button>
+              </button> */}
             {/* </div> */}
           </form>
           </HStack>
