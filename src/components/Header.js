@@ -1,5 +1,6 @@
+import { Button } from 'bootstrap';
 import React from 'react'
-import { Nav, MDBRow } from 'react-bootstrap'
+import { Nav } from 'react-bootstrap'
 import  logo   from '../assets/logo.png';
 
 const Header = () => {
@@ -8,11 +9,19 @@ const Header = () => {
             <Nav
                 
             >
-                <p 
+
+                    <button
+                        
+                        className="btn btn-danger mt-3 mb-2"
+                        
+
+                        >Mi Logo
+                    </button>
+                {/* <p 
                     
                 >
                     Mi Logo
-                </p>           
+                </p>            */}
             </Nav>
             <hr></hr>
         </div>
